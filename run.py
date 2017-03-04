@@ -2,6 +2,7 @@ from colorama import Fore, init, Style
 import requests
 import os
 import time
+import sys
 from pygame import mixer
 
 
@@ -14,14 +15,20 @@ def print_(output):
 
 def main():
     init()
+
+    if sys.version_info <= (3, 0):
+        print_("Could not start: Python 3.x is required.\n")
+        exit()
+
     print_(Fore.WHITE + 'Adidas.com Stock Monitor - @hunter_bdm')
     while True:
         try:
             sku = input('Enter SKU: ')
             sleep_t = int(input('Enter sleep time: '))
             break
-        except:
+        except Exception as e:
             clear()
+            print(e)
             print_('Invalid Input')
 
     url = 'http://www.adidas.com/on/demandware.store/Sites-adidas-US-Site/en_US/Product-GetAvailableSizes?pid=' + sku
